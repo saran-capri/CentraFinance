@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "CentraFinance",
   description: "CentraFinance is a modern and unified banking platform for everyone.",
   icons: {
-    icon: '/icons/logo.svg'
+    icon: '/icons/CentraFinance_Logo.svg'
   }
 };
 
