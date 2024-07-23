@@ -144,7 +144,7 @@ export const createLinkToken = async (user: User) => {
       client_name: `${user.firstName} ${user.lastName}`,
       products: ['auth'] as Products[],
       language: 'en',
-      country_codes: ['CA'] as CountryCode[],
+      country_codes: ['US'] as CountryCode[],
     }
 
     const response = await plaidClient.linkTokenCreate(tokenParams);
@@ -277,6 +277,24 @@ export const getBank = async ({ documentId }: getBankProps) => {
       BANK_COLLECTION_ID!,
       [Query.equal('$id', [documentId])]
     )
+
+    return parseStringify(bank.documents[0]);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getBankByAccountId = async ({ accountId }: getBankByAccountIdProps) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const bank = await database.listDocuments(
+      DATABASE_ID!,
+      BANK_COLLECTION_ID!,
+      [Query.equal('accountId', [accountId])]
+    )
+
+    if(bank.total !==1) return null;
 
     return parseStringify(bank.documents[0]);
   } catch (error) {
